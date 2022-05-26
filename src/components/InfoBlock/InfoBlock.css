@@ -1,0 +1,31 @@
+.infoblock{
+  width: 500px;
+  height: 80px;
+  background-color: #fff;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.infoblock__right{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  
+}
+.dayInfo-right__row{
+  display: flex;
+  justify-content: center;
+  height: 40px;
+}
+.row-item{
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  
+} 
+.row-item__count{
+  margin-left: 5px;
+}

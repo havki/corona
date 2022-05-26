@@ -1,0 +1,11 @@
+.day-block{
+  color: white;
+  width: 200px;
+  height: 250px;
+  background-color: #1BBC9B;
+  border-radius: 5px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
