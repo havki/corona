@@ -19,15 +19,25 @@ export const getCountries = createAsyncThunk(
 export const getOneCountryData = createAsyncThunk(
   "country/get",
   async (country, { rejectedWithValue }) => {
-    let isData=true
+    let isData = true;
+    // const today = new Date().toISOString();
+    // const firstTen =  today.substring(0,10)
+    // console.log(firstTen);
+
+    let timestamp = Date.now();
+    let fiveDaysAgo = 5*86400000;
+    let date = new Date(timestamp-fiveDaysAgo);
+    let currentDateISO = date.toISOString();
+    const firstTenDigits =  currentDateISO.substring(0,10)
+    
+    
     try {
       const res = await axios.get(
-        `/live/country/${country}/status/confirmed/date/2022-05-21T13:13:30Z`
+        `/live/country/${country}/status/confirmed/date/${firstTenDigits}T13:13:30Z`
       );
       if (!res?.data) throw new Error();
-      if (!res.data.length) isData= false
-      console.log(isData);
-      return {data:res.data,isData}
+      if (!res.data.length) isData = false;
+      return { data: res.data, isData };
     } catch (error) {
       return rejectedWithValue(error.res.data);
     }

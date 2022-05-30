@@ -1,22 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {getCountries,getOneCountryData} from "./main.asyncActions"
+import { getCountries, getOneCountryData } from "./main.asyncActions";
 
 export const mainSlice = createSlice({
-  name:'main',
-  initialState:{
+  name: "main",
+  initialState: {
     loading: null,
-    countries:null,
-    oneCountryData:null,
-    isData:true,
-
+    countries: null,
+    oneCountryData: null,
+    isData: true,
+    recoveredCases: [],
   },
-  reducers:{
-    setIsData:(state)=>{
-      state.isData = true
-    }
-
+  reducers: {
+    setIsData: (state) => {
+      state.isData = true;
+    },
+    setRecoveredCases: (state,action) => {
+      state.recoveredCases.push(action.payload)
+    },
   },
-  extraReducers:{
+  extraReducers: {
     [getCountries.fulfilled]: (state, action) => {
       state.countries = action.payload;
       state.loading = false;
@@ -25,24 +27,45 @@ export const mainSlice = createSlice({
       state.loading = true;
     },
     [getOneCountryData.fulfilled]: (state, action) => {
-     
-    const {data,isData} =action.payload
-      if(isData){
-        state.oneCountryData=data
+      const { data, isData } = action.payload;
+      if (isData) {
+        if (data.length === 5) state.oneCountryData = data;
+        else {
+          let initialArr = action.payload.data;
 
-      }
-      else{
-        state.isData=isData
+          let summObj = {};
+          for (let i = 0; i < initialArr.length; i++) {
+            const element = initialArr[i];
+            if (summObj[element.Date]) {
+              summObj[element.Date] = {
+                Confirmed: summObj[element.Date].Confirmed + element.Confirmed,
+                Deaths: summObj[element.Date].Deaths + element.Deaths,
+                Recovered: summObj[element.Date].Recovered + element.Recovered,
+                Active: summObj[element.Date].Active + element.Active,
+                Date: element.Date,
+              };
+            } else {
+              summObj[element.Date] = {
+                Confirmed: 0,
+                Deaths: 0,
+                Recovered: 0,
+                Active: 0,
+                Date: element.Date,
+              };
+            }
+          }
+          state.oneCountryData = Object.values(summObj);
+        }
+      } else {
+        state.isData = isData;
       }
 
       state.loading = false;
     },
     [getOneCountryData.rejected]: (state) => {
       state.loading = true;
-      
     },
-  }
+  },
+});
 
-})
-
-export const {doSome,setIsData} =mainSlice.actions
+export const { doSome, setIsData,setRecoveredCases } = mainSlice.actions;
