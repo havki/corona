@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { dateFromISO } from "../../helpers/Date";
-import { clearRecoveredCases } from "../../store/reducers/main/main.reducer";
 import "./Day.css";
 
 function Day() {
