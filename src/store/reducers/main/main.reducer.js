@@ -15,13 +15,12 @@ export const mainSlice = createSlice({
       state.isData = true;
     },
     setRecoveredCases: (state,action) => {
-      if(state.recoveredCases.length >9){
+      if(state.recoveredCases.length >4){
         state.recoveredCases=[]
       }
       state.recoveredCases.push(action.payload)
     },
-    clearRecoveredCases: (state) => {
-    },
+   
   },
   extraReducers: {
     [getCountries.fulfilled]: (state, action) => {
@@ -75,4 +74,4 @@ export const mainSlice = createSlice({
   },
 });
 
-export const { doSome, setIsData,setRecoveredCases,clearRecoveredCases } = mainSlice.actions;
+export const { doSome, setIsData,setRecoveredCases,} = mainSlice.actions;

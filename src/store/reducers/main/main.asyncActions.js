@@ -20,9 +20,6 @@ export const getOneCountryData = createAsyncThunk(
   "country/get",
   async (country, { rejectedWithValue }) => {
     let isData = true;
-    // const today = new Date().toISOString();
-    // const firstTen =  today.substring(0,10)
-    // console.log(firstTen);
 
     let timestamp = Date.now();
     let fiveDaysAgo = 5*86400000;

@@ -6,52 +6,24 @@ import "./InfoBlock.css";
 
 function InfoBlock({ item }) {
   const { Confirmed, Deaths, Active, Date } = item;
-  const [rand, setRand] = useState(0)
-  const dispatch=useDispatch()
-
+  const [rand, setRand] = useState(0);
+  const dispatch = useDispatch();
 
   const isMounted = useRef(false);
 
-  const isFirstRender = useRef(true);
-
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //   } else {
-  //     const data = {
-  //       date:Date,
-  //       recovered
-  //     }
-  //     dispatch(setRecoveredCases(data));
-  //   }
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     const data = {
-  //       date:Date,
-  //       recovered
-  //     }
-  //     console.log('asd');
-  //     dispatch(setRecoveredCases(data));
-  //   } else {
-  //     isMounted.current = true;
-  //   }
-  // }, []);
-
   useEffect(() => {
-    const data = {
-            date:Date,
-            recovered
-          }
-    dispatch(setRecoveredCases(data));
-    setRand(recovered)
-    console.log(recovered);
-  }, [dispatch])
-  
+    if (isMounted.current) {
+      const data = {
+        date: Date,
+        recovered,
+      };
+      dispatch(setRecoveredCases(data));
+      setRand(recovered);
+    } else {
+      isMounted.current = true;
+    }
+  }, []);
 
-  
-  
   let prc = (Deaths / Active) * 100;
   let recovered = 0;
   if (prc > 1) {
@@ -59,46 +31,45 @@ function InfoBlock({ item }) {
   } else {
     recovered = Math.round(Math.random() * (prc * 2) * Deaths);
   }
-  
-  
 
   return (
-    rand &&
-    <div className="infoblock">
-      <div className="infoblock__left">
-        <h4>{dateFromISO(Date)}</h4>
-      </div>
-      <div className="infoblock__right">
-        <div className="dayInfo-right__row">
-          <div className="row-item">
-            <h5>Active</h5>
-            <div className="row-item__count">
-              <h5>{Active}</h5>
+    rand && (
+      <div className="infoblock">
+        <div className="infoblock__left">
+          <h4>{dateFromISO(Date)}</h4>
+        </div>
+        <div className="infoblock__right">
+          <div className="dayInfo-right__row">
+            <div className="row-item">
+              <h5>Active</h5>
+              <div className="row-item__count">
+                <h5>{Active}</h5>
+              </div>
+            </div>
+            <div className="row-item">
+              <h5>Deaths:</h5>
+              <div className="row-item__count">
+                <h5>{Deaths}</h5>
+              </div>
             </div>
           </div>
-          <div className="row-item">
-            <h5>Deaths:</h5>
-            <div className="row-item__count">
-              <h5>{Deaths}</h5>
+          <div className="dayInfo-right__row">
+            <div className="row-item">
+              <h5>Confirmed:</h5>
+              <div className="row-item__count">
+                <h5>{Confirmed}</h5>
+              </div>
+            </div>
+            <div className="row-item">
+              <h5>Recovered:</h5>
+              <div className="row-item__count">
+                <h5>{rand}</h5>
+              </div>
             </div>
           </div>
         </div>
-        <div className="dayInfo-right__row">
-          <div className="row-item">
-            <h5>Confirmed:</h5>
-            <div className="row-item__count">
-              <h5>{Confirmed}</h5>
-            </div>
-          </div>
-          <div className="row-item">
-            <h5>Recovered:</h5>
-            <div className="row-item__count">
-              <h5>{rand}</h5>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    )
   );
 }
 

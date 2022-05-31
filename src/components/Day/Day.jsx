@@ -7,36 +7,19 @@ import "./Day.css";
 function Day() {
   const { recoveredCases } = useSelector((state) => state.main);
   const [bestDay, setBestDay] = useState(null);
-  const dispatch =  useDispatch()
   useEffect(() => {
-    // if(recoveredCases.length){
+    if(recoveredCases.length){
 
-    //   let obj = recoveredCases.reduce((prev,cur)=>{
-    //     return cur.recovered>prev.recovered?cur:prev;
-    //   },{recovered:0})
+      let obj = recoveredCases.reduce((prev,cur)=>{
+        return cur.recovered>prev.recovered?cur:prev;
+      },{recovered:0})
      
-    //   console.log(obj);
-    // }
-
-    if (recoveredCases.length) {
-      let max = recoveredCases[0].recovered;
-      for (let i = 0; i < recoveredCases.length; i++) {
-        if (recoveredCases[i].recovered > max) {
-          max = recoveredCases[i].recovered;
-        }
-      }
-      let current = recoveredCases.filter((item) => item.recovered === max);
-      setBestDay(current[0]);
+      setBestDay(obj);
     }
+
+   
   }, [recoveredCases]);
 
-
-  // useEffect(() => {
-  
-  //   dispatch(clearRecoveredCases())
-    
-  // }, [dispatch])
-  
 
   return (
     bestDay && (
