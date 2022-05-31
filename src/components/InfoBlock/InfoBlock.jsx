@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { dateFromISO } from "../../helpers/Date";
 import { setRecoveredCases } from "../../store/reducers/main/main.reducer";
@@ -6,6 +6,7 @@ import "./InfoBlock.css";
 
 function InfoBlock({ item }) {
   const { Confirmed, Deaths, Active, Date } = item;
+  const [rand, setRand] = useState(0)
   const dispatch=useDispatch()
 
 
@@ -25,17 +26,29 @@ function InfoBlock({ item }) {
   //   }
   // }, [dispatch]);
 
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     const data = {
+  //       date:Date,
+  //       recovered
+  //     }
+  //     console.log('asd');
+  //     dispatch(setRecoveredCases(data));
+  //   } else {
+  //     isMounted.current = true;
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (isMounted.current) {
-      const data = {
-        date:Date,
-        recovered
-      }
-      dispatch(setRecoveredCases(data));
-    } else {
-      isMounted.current = true;
-    }
-  }, [dispatch]);
+    const data = {
+            date:Date,
+            recovered
+          }
+    dispatch(setRecoveredCases(data));
+    setRand(recovered)
+    console.log(recovered);
+  }, [dispatch])
+  
 
   
   
@@ -50,6 +63,7 @@ function InfoBlock({ item }) {
   
 
   return (
+    rand &&
     <div className="infoblock">
       <div className="infoblock__left">
         <h4>{dateFromISO(Date)}</h4>
@@ -79,7 +93,7 @@ function InfoBlock({ item }) {
           <div className="row-item">
             <h5>Recovered:</h5>
             <div className="row-item__count">
-              <h5>{recovered}</h5>
+              <h5>{rand}</h5>
             </div>
           </div>
         </div>

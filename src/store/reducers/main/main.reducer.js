@@ -15,7 +15,12 @@ export const mainSlice = createSlice({
       state.isData = true;
     },
     setRecoveredCases: (state,action) => {
+      if(state.recoveredCases.length >9){
+        state.recoveredCases=[]
+      }
       state.recoveredCases.push(action.payload)
+    },
+    clearRecoveredCases: (state) => {
     },
   },
   extraReducers: {
@@ -43,6 +48,7 @@ export const mainSlice = createSlice({
                 Recovered: summObj[element.Date].Recovered + element.Recovered,
                 Active: summObj[element.Date].Active + element.Active,
                 Date: element.Date,
+                ID: element.ID
               };
             } else {
               summObj[element.Date] = {
@@ -51,6 +57,7 @@ export const mainSlice = createSlice({
                 Recovered: 0,
                 Active: 0,
                 Date: element.Date,
+                ID: element.ID
               };
             }
           }
@@ -68,4 +75,4 @@ export const mainSlice = createSlice({
   },
 });
 
-export const { doSome, setIsData,setRecoveredCases } = mainSlice.actions;
+export const { doSome, setIsData,setRecoveredCases,clearRecoveredCases } = mainSlice.actions;

@@ -40,7 +40,7 @@ function App() {
           <div className="grid">
             {oneCountryData &&
               oneCountryData.map((item) => {
-                return <InfoBlock id={item.ID} item={item} />;
+                return <InfoBlock key={item.ID} item={item} />;
               })}
           </div>
         </div>
