@@ -24,7 +24,7 @@ function App() {
     };
   }, [isData, dispatch]);
 
-  // console.log(Date.now('2022-05-23T00:00:00Z'));
+  
 
   const notify = () => toast.warn("There is no information!!");
 
